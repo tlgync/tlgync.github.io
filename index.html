@@ -55,29 +55,10 @@
     </div>
   </div>
 
-  <!-- App window mock -->
-  <div class="shot reveal" aria-hidden="true">
-    <div class="shot-bar">
-      <span class="traffic"><i class="r"></i><i class="y"></i><i class="g"></i></span>
-      <span class="shot-title">mrd — main · ~/Documents/repositories/mrd</span>
-    </div>
-    <div class="shot-body">
-      <aside class="mock-side">
-        <div class="mock-group">Workspaces</div>
-        <div class="mock-row active"><span class="s run"></span> mrd · main</div>
-        <div class="mock-row"><span class="s wait"></span> web-app · develop</div>
-        <div class="mock-row"><span class="s" style="background:var(--ink-faint)"></span> docs · main</div>
-        <div class="mock-group">Group · API</div>
-        <div class="mock-row"><span class="s run"></span> service · feat/auth</div>
-      </aside>
-      <div class="mock-term">
-        <div><span class="p">mrd</span> <span class="b">main</span> <span class="muted">❯</span> claude</div>
-        <div class="muted">· Building the release pipeline…</div>
-        <div><span class="c">✓</span> tests passed <span class="muted">·</span> 0 failing</div>
-        <div class="muted">· Awaiting your review of the diff</div>
-        <div><span class="p">mrd</span> <span class="b">main</span> <span class="muted">❯</span> <span class="cursor"></span></div>
-      </div>
-    </div>
+  <!-- Real app screenshot -->
+  <div class="appshot reveal">
+    <img src="assets/shots/shot-hero.png" width="1600" height="1115"
+         alt="mrd showing a terminal workspace with the Inspector open — git diffs, commit history, and listening ports" />
   </div>
 </header>
 
@@ -137,20 +118,9 @@
         <li>Attention clears the instant you look — no stale “needs you” that won’t go away</li>
       </ul>
     </div>
-    <div class="hl-media reveal">
-      <div class="hl-card">
-        <div class="codeblock">
-<span class="c1"># the + menu, adapting to your machine</span><br/>
-<span class="ac">New Terminal</span>      <span class="c1">⌘T</span><br/>
-<span class="ac">Open Claude</span>       <span class="c1">claude ✓</span><br/>
-<span class="ac">Open Codex</span>        <span class="c1">codex ✓</span><br/>
-<br/>
-<span class="c1"># status, straight from the agent's hooks</span><br/>
-mrd · main   <span class="ok">● running</span><br/>
-web · dev    <span style="color:var(--accent)">● waiting for you</span><br/>
-docs · main  <span class="c1">○ idle</span>
-        </div>
-      </div>
+    <div class="hl-media hl-shot reveal">
+      <img src="assets/shots/shot-menu.png" width="1600" height="1115"
+           alt="The + menu open in mrd, offering New Terminal, Open Claude, and Open Codex" />
     </div>
   </div>
 
@@ -166,22 +136,9 @@ docs · main  <span class="c1">○ idle</span>
         <li>In-app updates — a quiet footer appears only when a new build is ready</li>
       </ul>
     </div>
-    <div class="hl-media reveal">
-      <div class="hl-card" aria-hidden="true">
-        <div class="notch-demo" style="margin:0 0 18px">
-          <div class="notch">
-            <span class="pill"><span class="s wait"></span> Claude · Finished — review the diff?</span>
-          </div>
-        </div>
-        <div class="codeblock">
-<span class="c1"># interactive — answered from the HUD</span><br/>
-Allow <span class="ac">Edit</span> to write <span class="ok">WorkspaceManager.swift</span>?<br/>
-<br/>
-  <span class="ok">[ Allow ]</span>   [ Deny ]<br/>
-<br/>
-<span class="c1"># never switches your window or focus</span>
-        </div>
-      </div>
+    <div class="hl-media hl-shot reveal">
+      <img src="assets/shots/shot-agents.png" width="1700" height="1114"
+           alt="mrd in a 2×2 split — a Swift diff, a terminal, Claude Code and Codex running side by side, with the session Vault on the right" />
     </div>
   </div>
 </section>

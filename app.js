@@ -2,28 +2,63 @@
 (function () {
   'use strict';
 
-  const RELEASES = 'https://github.com/tlgync/mrd-releases/releases';
-  const MANIFEST = 'https://github.com/tlgync/mrd-releases/releases/latest/download/latest.json';
+  const REPO     = 'tlgync/mrd-releases';
+  const RELEASES = 'https://github.com/' + REPO + '/releases';
+  const API      = 'https://api.github.com/repos/' + REPO + '/releases/latest';
+  const MANIFEST = RELEASES + '/latest/download/latest.json';
 
-  /* --- Live download link from the in-app update manifest ---------------- */
+  const DL_IDS  = ['navDownload', 'heroDownload', 'ctaDownload'];
+  const VER_IDS = ['verLabel', 'verLabel2'];
+
+  function setDownloadUrl(url) {
+    if (!url) return;
+    DL_IDS.forEach((id) => { const el = document.getElementById(id); if (el) el.href = url; });
+  }
+  function setVersion(v) {
+    if (!v) return;
+    const label = 'v' + String(v).replace(/^v/, '');
+    VER_IDS.forEach((id) => { const el = document.getElementById(id); if (el) el.textContent = label; });
+  }
+
+  /* Pick the macOS app asset — prefer .dmg, fall back to .zip. A direct asset
+     URL downloads straight away; no GitHub page in between. */
+  function pickAsset(assets) {
+    if (!Array.isArray(assets)) return null;
+    const dmg = assets.find((a) => /\.dmg$/i.test(a.name));
+    if (dmg) return dmg.browser_download_url;
+    const zip = assets.find((a) => /\.zip$/i.test(a.name) && !/latest\.json/i.test(a.name));
+    return zip ? zip.browser_download_url : null;
+  }
+
+  /* --- Live, direct download link -------------------------------------------
+     1) GitHub API (CORS-enabled) → exact asset URL + version → direct download.
+     2) latest.json manifest as a secondary source (url + minSystem).
+     3) releases/latest page only as the last resort. ------------------------- */
   function wireDownloads() {
-    const dlIds  = ['navDownload', 'heroDownload', 'ctaDownload'];
-    const verIds = ['verLabel', 'verLabel2'];
-    fetch(MANIFEST, { cache: 'no-store' })
+    fetch(API, { cache: 'no-store', headers: { Accept: 'application/vnd.github+json' } })
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((rel) => {
+        const url = pickAsset(rel.assets);
+        setVersion(rel.tag_name || rel.name);
+        if (url) { setDownloadUrl(url); return; }
+        return fetchManifest(false); // no usable asset → try manifest url
+      })
+      .catch(() => fetchManifest(false));
+    // minSystem lives only in the manifest — fetch it best-effort regardless.
+    fetchManifest(true);
+  }
+
+  function fetchManifest(systemOnly) {
+    return fetch(MANIFEST, { cache: 'no-store' })
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then((m) => {
-        if (m && m.url) {
-          dlIds.forEach((id) => { const el = document.getElementById(id); if (el) el.href = m.url; });
-        }
-        if (m && m.version) {
-          verIds.forEach((id) => { const el = document.getElementById(id); if (el) el.textContent = 'v' + m.version; });
-        }
+        if (!m) return;
+        if (!systemOnly) { setDownloadUrl(m.url); setVersion(m.version); }
         const sys = document.getElementById('metaSystem');
-        if (sys && m && m.minSystem) sys.textContent = 'macOS ' + m.minSystem + ' or newer';
+        if (sys && m.minSystem) sys.textContent = 'macOS ' + m.minSystem + ' or newer';
       })
       .catch(() => {
-        /* Fallback: the releases/latest page already redirects to the newest tag. */
-        dlIds.forEach((id) => { const el = document.getElementById(id); if (el) el.href = RELEASES + '/latest'; });
+        if (!systemOnly) setDownloadUrl(RELEASES + '/latest');
       });
   }
 

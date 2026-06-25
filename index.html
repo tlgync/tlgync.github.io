@@ -27,7 +27,7 @@
     <a href="docs.html">Docs</a>
     <a href="https://github.com/tlgync/mrd-releases/releases" target="_blank" rel="noopener">Releases</a>
   </div>
-  <a class="nav-cta" id="navDownload" href="https://github.com/tlgync/mrd-releases/releases/latest">Download</a>
+  <a class="nav-cta" id="navDownload" href="https://github.com/tlgync/mrd-releases/releases/latest" download>Download</a>
 </nav>
 
 <header class="hero wrap">
@@ -38,7 +38,7 @@
   the keyboard, and pick up exactly where you left off after a restart.</p>
 
   <div class="hero-cta reveal">
-    <a class="btn btn-primary" id="heroDownload" href="https://github.com/tlgync/mrd-releases/releases/latest">
+    <a class="btn btn-primary" id="heroDownload" href="https://github.com/tlgync/mrd-releases/releases/latest" download>
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Download for macOS
       <span class="sub" id="verLabel">latest</span>
@@ -106,39 +106,77 @@
 
 <!-- AGENTS HIGHLIGHT -->
 <section class="section wrap" id="agents">
-  <div class="highlight">
-    <div class="hl-text reveal">
+  <div class="showcase">
+    <div class="showcase-head reveal">
       <span class="eyebrow">Claude Code &amp; Codex</span>
       <h3>Your agents, finally visible</h3>
       <p>mrd talks to agents through their own hook system — not by scraping the screen. That means the status you see is the status that's true: green while a turn is running, amber the moment it's waiting for you, quiet when it's idle.</p>
-      <ul>
-        <li>Open an agent from the <strong>+</strong> menu — it only offers the CLIs you actually have installed</li>
-        <li>Sidebar badges and macOS notifications when a run finishes off-screen</li>
-        <li>Hooks install themselves on first launch; nothing to configure</li>
-        <li>Attention clears the instant you look — no stale “needs you” that won’t go away</li>
-      </ul>
     </div>
-    <div class="hl-media hl-shot reveal">
+    <ul class="showcase-points reveal">
+      <li>Open an agent from the <strong>+</strong> menu — it only offers the CLIs you actually have installed</li>
+      <li>Sidebar badges and macOS notifications when a run finishes off-screen</li>
+      <li>Hooks install themselves on first launch; nothing to configure</li>
+      <li>Attention clears the instant you look — no stale “needs you” that won’t go away</li>
+    </ul>
+    <div class="showcase-shot reveal">
       <img src="assets/shots/shot-menu.png" width="1600" height="1115"
            alt="The + menu open in mrd, offering New Terminal, Open Claude, and Open Codex" />
     </div>
   </div>
 
-  <div class="highlight flip">
-    <div class="hl-text reveal">
+  <div class="showcase">
+    <div class="showcase-head reveal">
       <span class="eyebrow">Liquid Glass</span>
       <h3>Native to the last pixel</h3>
       <p>Three panels — Sidebar, Content, Inspector — sitting on macOS 26's real glass materials, not a web imitation. The Inspector surfaces what a project is doing: listening ports, branch, and more.</p>
-      <ul>
-        <li>System glass on the chrome, a solid calm ground behind your terminal</li>
-        <li>Unified toolbar, full keyboard-menu coverage, proper focus handling</li>
-        <li>Splits (<kbd>⌘D</kbd> / <kbd>⇧⌘D</kbd>) and tabs that behave like Safari’s</li>
-        <li>In-app updates — a quiet footer appears only when a new build is ready</li>
-      </ul>
     </div>
-    <div class="hl-media hl-shot reveal">
+    <ul class="showcase-points reveal">
+      <li>System glass on the chrome, a solid calm ground behind your terminal</li>
+      <li>Unified toolbar, full keyboard-menu coverage, proper focus handling</li>
+      <li>Splits (<kbd>⌘D</kbd> / <kbd>⇧⌘D</kbd>) and tabs that behave like Safari’s</li>
+      <li>In-app updates — a quiet footer appears only when a new build is ready</li>
+    </ul>
+    <div class="showcase-shot reveal">
       <img src="assets/shots/shot-agents.png" width="1700" height="1114"
            alt="mrd in a 2×2 split — a Swift diff, a terminal, Claude Code and Codex running side by side, with the session Vault on the right" />
+    </div>
+  </div>
+</section>
+
+<!-- DICTATION + HUD SHOWCASE -->
+<section class="section wrap" id="dictation">
+  <div class="hud-showcase">
+    <div class="hud-copy reveal">
+      <span class="eyebrow">Dictation &amp; the HUD</span>
+      <h2>Speak to them. Answer them. Stay on the keyboard.</h2>
+      <p>The notch HUD collapses to a quiet pill while a turn runs, then opens into a full question
+      card the moment an agent needs you — choices and all. Pick an answer right there, and it flows
+      straight back to the terminal.</p>
+      <ul>
+        <li><strong>Live question cards</strong> — when Claude or Codex asks something, the choices appear under the notch; answer with a click or jump back with <kbd>↵</kbd></li>
+        <li><strong>On-device dictation</strong> — a mic appears on any agent pane; speech is transcribed locally and pasted in, you press Enter when ready</li>
+        <li><strong>Never steals focus</strong> — the panel floats over your desktop without pulling you out of whatever you're doing</li>
+      </ul>
+    </div>
+
+    <div class="hud-media reveal">
+      <figure class="hud-frame">
+        <img src="assets/shots/shot-hud-working.png" width="400" height="84"
+             alt="The mrd notch HUD collapsed to a pill reading 'Interactive greeting and question prompt — Working…'" loading="lazy" />
+        <figcaption><span class="tag">Collapsed</span> a turn is running — quiet and out of the way</figcaption>
+      </figure>
+
+      <figure class="hud-frame hud-frame--lead">
+        <img src="assets/shots/shot-hud-question.png" width="400" height="230"
+             alt="The HUD expanded into a question card: 'Hangisini seçiyorsun?' with Hello and World choices and 'Answer in terminal'" loading="lazy" />
+        <figcaption><span class="tag">Expanded</span> the agent asks — answer in place</figcaption>
+      </figure>
+
+      <figure class="hud-frame">
+        <img src="assets/shots/shot-dictation.png" width="671" height="301"
+             alt="mrd recording voice dictation while the Inspector shows the active workspace and ports" loading="lazy" />
+        <figcaption><span class="tag">Dictation</span> hold to talk — transcribed on-device</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -167,7 +205,7 @@
     <p>Download the latest build and point it at a repo. Hooks set themselves up, and your
     first agent is one <kbd>⌘T</kbd> away.</p>
     <div class="hero-cta">
-      <a class="btn btn-primary" id="ctaDownload" href="https://github.com/tlgync/mrd-releases/releases/latest">
+      <a class="btn btn-primary" id="ctaDownload" href="https://github.com/tlgync/mrd-releases/releases/latest" download>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Download for macOS <span class="sub" id="verLabel2">latest</span>
       </a>

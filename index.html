@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>mrd — a native macOS terminal that orchestrates your AI agents</title>
+<meta name="description" content="mrd is a native macOS terminal built for AI coding agents. Three-panel workspace, a Dynamic-Island agent HUD, voice dictation, and session resume for Claude Code and Codex — all on Liquid Glass." />
+<meta property="og:title" content="mrd — native macOS terminal for AI agents" />
+<meta property="og:description" content="Three-panel workspace, Dynamic-Island agent HUD, voice dictation, and session resume for Claude Code and Codex." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="assets/icon-512.png" />
+<link rel="icon" href="assets/favicon.png" />
+<link rel="apple-touch-icon" href="assets/icon-256.png" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="bg-atmos"></div>
+<div class="bg-grid"></div>
+<div class="bg-grain"></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a class="brand" href="/"><img src="assets/icon.png" alt="mrd" /><b>mrd</b></a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#agents">Agents</a>
+    <a href="docs.html">Docs</a>
+    <a href="https://github.com/tlgync/mrd-releases/releases" target="_blank" rel="noopener">Releases</a>
+  </div>
+  <a class="nav-cta" id="navDownload" href="https://github.com/tlgync/mrd-releases/releases/latest">Download</a>
+</nav>
+
+<header class="hero wrap">
+  <span class="badge reveal"><span class="dot"></span> Built for macOS 26 · Apple Silicon</span>
+  <h1 class="reveal">The terminal that <span class="hl">runs your agents</span> for you</h1>
+  <p class="lede reveal">mrd is a native macOS terminal orchestrator. Spin up Claude Code and Codex in tidy
+  workspaces, watch every agent from a Dynamic-Island HUD, answer their questions without leaving
+  the keyboard, and pick up exactly where you left off after a restart.</p>
+
+  <div class="hero-cta reveal">
+    <a class="btn btn-primary" id="heroDownload" href="https://github.com/tlgync/mrd-releases/releases/latest">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Download for macOS
+      <span class="sub" id="verLabel">latest</span>
+    </a>
+    <a class="btn btn-ghost" href="docs.html">Read the docs</a>
+  </div>
+  <p class="hero-meta reveal">Free · Notarized · <span id="metaSystem">macOS 26 (Tahoe) or newer</span> · Apple Silicon</p>
+
+  <!-- Notch HUD demo -->
+  <div class="notch-demo reveal" aria-hidden="true">
+    <div class="notch">
+      <span class="pill"><span class="s run"></span> claude · Working…</span>
+      <span class="pill"><span class="s wait"></span> codex · Needs you</span>
+    </div>
+  </div>
+
+  <!-- App window mock -->
+  <div class="shot reveal" aria-hidden="true">
+    <div class="shot-bar">
+      <span class="traffic"><i class="r"></i><i class="y"></i><i class="g"></i></span>
+      <span class="shot-title">mrd — main · ~/Documents/repositories/mrd</span>
+    </div>
+    <div class="shot-body">
+      <aside class="mock-side">
+        <div class="mock-group">Workspaces</div>
+        <div class="mock-row active"><span class="s run"></span> mrd · main</div>
+        <div class="mock-row"><span class="s wait"></span> web-app · develop</div>
+        <div class="mock-row"><span class="s" style="background:var(--ink-faint)"></span> docs · main</div>
+        <div class="mock-group">Group · API</div>
+        <div class="mock-row"><span class="s run"></span> service · feat/auth</div>
+      </aside>
+      <div class="mock-term">
+        <div><span class="p">mrd</span> <span class="b">main</span> <span class="muted">❯</span> claude</div>
+        <div class="muted">· Building the release pipeline…</div>
+        <div><span class="c">✓</span> tests passed <span class="muted">·</span> 0 failing</div>
+        <div class="muted">· Awaiting your review of the diff</div>
+        <div><span class="p">mrd</span> <span class="b">main</span> <span class="muted">❯</span> <span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- FEATURES -->
+<section class="section wrap" id="features">
+  <div class="section-head reveal">
+    <span class="eyebrow">What you get</span>
+    <h2>A workspace shaped around agents, not tabs</h2>
+    <p>Everything is native AppKit on macOS 26's Liquid Glass — no Electron, no daemon, one process.</p>
+  </div>
+
+  <div class="feat-grid" data-stagger>
+    <div class="feat">
+      <div class="ic">🛰️</div>
+      <h3>Dynamic-Island agent HUD</h3>
+      <p>A non-activating panel under the notch shows every live agent — running, finished, or waiting on you. Click a row to jump straight to that pane. It never steals focus.</p>
+    </div>
+    <div class="feat">
+      <div class="ic">💬</div>
+      <h3>Answer agents in place</h3>
+      <p>When an agent asks a question or needs permission, a clean Allow / Deny card appears in the HUD. Decide without switching windows — your answer flows right back to the agent.</p>
+    </div>
+    <div class="feat">
+      <div class="ic">🎙️</div>
+      <h3>On-device voice dictation</h3>
+      <p>Talk to your agent. A mic appears whenever a Claude or Codex pane is focused; speech is transcribed fully on-device and pasted in — you press Enter when you're ready.</p>
+    </div>
+    <div class="feat">
+      <div class="ic">↩️</div>
+      <h3>Resume after a restart</h3>
+      <p>Quit and reopen — mrd restores your layout and resumes each agent conversation with its native <code>--resume</code>, replaying the scrollback so nothing feels lost.</p>
+    </div>
+    <div class="feat">
+      <div class="ic">🗂️</div>
+      <h3>Workspaces &amp; groups</h3>
+      <p>Organize projects in the glass sidebar with branch and folder at a glance. Splits, tabs, and even a browser pane live inside each workspace. Jump with <kbd>⌘1–9</kbd>.</p>
+    </div>
+    <div class="feat">
+      <div class="ic">⚡</div>
+      <h3>A real terminal underneath</h3>
+      <p>Rendering is libghostty — fast, GPU-accelerated, and it reads your existing <code>~/.config/ghostty</code> config, so your colors and keybinds come along for free.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AGENTS HIGHLIGHT -->
+<section class="section wrap" id="agents">
+  <div class="highlight">
+    <div class="hl-text reveal">
+      <span class="eyebrow">Claude Code &amp; Codex</span>
+      <h3>Your agents, finally visible</h3>
+      <p>mrd talks to agents through their own hook system — not by scraping the screen. That means the status you see is the status that's true: green while a turn is running, amber the moment it's waiting for you, quiet when it's idle.</p>
+      <ul>
+        <li>Open an agent from the <strong>+</strong> menu — it only offers the CLIs you actually have installed</li>
+        <li>Sidebar badges and macOS notifications when a run finishes off-screen</li>
+        <li>Hooks install themselves on first launch; nothing to configure</li>
+        <li>Attention clears the instant you look — no stale “needs you” that won’t go away</li>
+      </ul>
+    </div>
+    <div class="hl-media reveal">
+      <div class="hl-card">
+        <div class="codeblock">
+<span class="c1"># the + menu, adapting to your machine</span><br/>
+<span class="ac">New Terminal</span>      <span class="c1">⌘T</span><br/>
+<span class="ac">Open Claude</span>       <span class="c1">claude ✓</span><br/>
+<span class="ac">Open Codex</span>        <span class="c1">codex ✓</span><br/>
+<br/>
+<span class="c1"># status, straight from the agent's hooks</span><br/>
+mrd · main   <span class="ok">● running</span><br/>
+web · dev    <span style="color:var(--accent)">● waiting for you</span><br/>
+docs · main  <span class="c1">○ idle</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight flip">
+    <div class="hl-text reveal">
+      <span class="eyebrow">Liquid Glass</span>
+      <h3>Native to the last pixel</h3>
+      <p>Three panels — Sidebar, Content, Inspector — sitting on macOS 26's real glass materials, not a web imitation. The Inspector surfaces what a project is doing: listening ports, branch, and more.</p>
+      <ul>
+        <li>System glass on the chrome, a solid calm ground behind your terminal</li>
+        <li>Unified toolbar, full keyboard-menu coverage, proper focus handling</li>
+        <li>Splits (<kbd>⌘D</kbd> / <kbd>⇧⌘D</kbd>) and tabs that behave like Safari’s</li>
+        <li>In-app updates — a quiet footer appears only when a new build is ready</li>
+      </ul>
+    </div>
+    <div class="hl-media reveal">
+      <div class="hl-card" aria-hidden="true">
+        <div class="notch-demo" style="margin:0 0 18px">
+          <div class="notch">
+            <span class="pill"><span class="s wait"></span> Claude · Finished — review the diff?</span>
+          </div>
+        </div>
+        <div class="codeblock">
+<span class="c1"># interactive — answered from the HUD</span><br/>
+Allow <span class="ac">Edit</span> to write <span class="ok">WorkspaceManager.swift</span>?<br/>
+<br/>
+  <span class="ok">[ Allow ]</span>   [ Deny ]<br/>
+<br/>
+<span class="c1"># never switches your window or focus</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY STRIP -->
+<section class="section wrap">
+  <div class="section-head reveal" style="max-width:760px">
+    <span class="eyebrow">Quietly trustworthy</span>
+    <h2>One process. On-device. No phoning home.</h2>
+    <p>No background daemon, no Electron, no telemetry. Dictation runs on Apple's on-device
+    speech models. Agent status comes from local hooks — mrd never reads your screen or your
+    keystrokes to figure out what's happening.</p>
+  </div>
+  <div class="feat-grid" data-stagger>
+    <div class="feat"><div class="ic">🔒</div><h3>On-device speech</h3><p>Dictation uses macOS 26's SpeechAnalyzer — audio never leaves your Mac.</p></div>
+    <div class="feat"><div class="ic">🪶</div><h3>Single process</h3><p>No daemon to babysit. PTYs spawn in-app; closing the app closes everything.</p></div>
+    <div class="feat"><div class="ic">📦</div><h3>Notarized builds</h3><p>Signed and notarized by Apple — download, drag to Applications, open. That's it.</p></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band wrap">
+  <div class="glass reveal">
+    <span class="eyebrow">Ready when you are</span>
+    <h2>Give your agents a home</h2>
+    <p>Download the latest build and point it at a repo. Hooks set themselves up, and your
+    first agent is one <kbd>⌘T</kbd> away.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" id="ctaDownload" href="https://github.com/tlgync/mrd-releases/releases/latest">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Download for macOS <span class="sub" id="verLabel2">latest</span>
+      </a>
+      <a class="btn btn-ghost" href="docs.html">Read the docs</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer wrap">
+  <div class="footer-grid">
+    <div>
+      <a class="brand" href="/"><img src="assets/icon.png" alt="mrd" style="width:26px;height:26px" /><b>mrd</b></a>
+      <p class="footer-tag">A native macOS terminal that orchestrates your AI coding agents.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="#features">Features</a>
+      <a href="#agents">Agents</a>
+      <a href="docs.html">Documentation</a>
+    </div>
+    <div class="footer-col">
+      <h4>Get it</h4>
+      <a href="https://github.com/tlgync/mrd-releases/releases/latest" target="_blank" rel="noopener">Latest release</a>
+      <a href="https://github.com/tlgync/mrd-releases/releases" target="_blank" rel="noopener">All releases</a>
+      <a href="docs.html#install">Install guide</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a href="docs.html#troubleshooting">Troubleshooting</a>
+      <a href="docs.html#shortcuts">Keyboard shortcuts</a>
+      <a href="docs.html#privacy">Privacy</a>
+    </div>
+  </div>
+  <div class="footer-base">
+    <span>© 2026 mrd · Made for macOS</span>
+    <span>Requires macOS 26 (Tahoe) · Apple Silicon</span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

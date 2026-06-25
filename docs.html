@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Documentation — mrd</title>
+<meta name="description" content="Complete documentation for mrd: install, workspaces, AI agents, the notch HUD, voice dictation, session resume, settings, keyboard shortcuts, privacy, and troubleshooting." />
+<link rel="icon" href="assets/favicon.png" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="bg-atmos"></div>
+<div class="bg-grid"></div>
+<div class="bg-grain"></div>
+
+<nav class="nav" id="nav">
+  <a class="brand" href="index.html"><img src="assets/icon.png" alt="mrd" /><b>mrd</b></a>
+  <div class="nav-links">
+    <a href="index.html#features">Features</a>
+    <a href="index.html#agents">Agents</a>
+    <a href="docs.html">Docs</a>
+    <a href="https://github.com/tlgync/mrd-releases/releases" target="_blank" rel="noopener">Releases</a>
+  </div>
+  <a class="nav-cta" id="navDownload" href="https://github.com/tlgync/mrd-releases/releases/latest">Download</a>
+</nav>
+
+<div class="docs-shell">
+  <!-- SIDEBAR NAV -->
+  <aside class="docs-nav">
+    <div class="group">Getting started</div>
+    <a href="#overview">Overview</a>
+    <a href="#requirements">Requirements</a>
+    <a href="#install">Install &amp; first launch</a>
+    <a href="#updates">Staying up to date</a>
+
+    <div class="group">The interface</div>
+    <a href="#layout">The three panels</a>
+    <a href="#workspaces">Workspaces &amp; groups</a>
+    <a href="#terminals">Terminals, tabs &amp; splits</a>
+    <a href="#browser">Browser panes</a>
+    <a href="#inspector">The Inspector</a>
+
+    <div class="group">AI agents</div>
+    <a href="#agents">Running Claude &amp; Codex</a>
+    <a href="#notch">The notch HUD</a>
+    <a href="#notifications">Notifications &amp; attention</a>
+    <a href="#questions">Answering questions</a>
+    <a href="#resume">Session resume</a>
+
+    <div class="group">Productivity</div>
+    <a href="#dictation">Voice dictation</a>
+    <a href="#shortcuts">Keyboard shortcuts</a>
+
+    <div class="group">Reference</div>
+    <a href="#settings">Settings &amp; opt-outs</a>
+    <a href="#files">Files &amp; data</a>
+    <a href="#privacy">Privacy</a>
+    <a href="#troubleshooting">Troubleshooting</a>
+    <a href="#uninstall">Uninstall</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="docs-main">
+    <a class="docs-back" href="index.html">← Back to home</a>
+    <h1>Documentation</h1>
+    <p class="doc-lede">Everything you need to run AI coding agents inside mrd — from your first
+    launch to the settings most people never have to touch.</p>
+
+    <!-- OVERVIEW -->
+    <section id="overview">
+      <h2><span class="num">01</span> Overview</h2>
+      <p><strong>mrd</strong> is a native macOS terminal built around AI coding agents. Instead of
+      juggling agents across scattered terminal tabs, you give each project a <em>workspace</em>,
+      open <strong>Claude Code</strong> or <strong>Codex</strong> inside it, and let mrd keep track of
+      what every agent is doing — even while you're looking at something else.</p>
+      <p>Three things make it different from a plain terminal:</p>
+      <ul>
+        <li><strong>It watches your agents.</strong> A small heads-up display under the notch shows
+        every live agent and whether it's running, finished, or waiting on you.</li>
+        <li><strong>It talks back.</strong> When an agent needs a decision, you answer right there —
+        no window-switching.</li>
+        <li><strong>It remembers.</strong> Quit and reopen, and your layout plus each agent's
+        conversation come back.</li>
+      </ul>
+      <p>Under the hood it's one process — no background daemon, no Electron. The terminal itself is
+      rendered by <strong>libghostty</strong>, the engine behind the Ghostty terminal, so it's fast and
+      reuses your existing Ghostty configuration.</p>
+    </section>
+
+    <!-- REQUIREMENTS -->
+    <section id="requirements">
+      <h2><span class="num">02</span> Requirements</h2>
+      <table class="doc">
+        <tr><th>Requirement</th><th>Detail</th></tr>
+        <tr><td><strong>macOS</strong></td><td>macOS&nbsp;26 (Tahoe) or newer. mrd is built on the Liquid Glass design system, which earlier versions of macOS don't have.</td></tr>
+        <tr><td><strong>Chip</strong></td><td>Apple Silicon (M-series). There is no Intel build.</td></tr>
+        <tr><td><strong>Agents (optional)</strong></td><td>To use agent features, install the <strong>Claude Code</strong> and/or <strong>Codex</strong> CLI. mrd works as a plain terminal without them.</td></tr>
+      </table>
+      <div class="callout note"><span class="ci">ℹ️</span><p>mrd only offers an agent in its <strong>+</strong> menu if it can actually find that CLI on your shell's <code>PATH</code>. If <em>Open Claude</em> or <em>Open Codex</em> is missing, see <a href="#troubleshooting">Troubleshooting</a>.</p></div>
+    </section>
+
+    <!-- INSTALL -->
+    <section id="install">
+      <h2><span class="num">03</span> Install &amp; first launch</h2>
+      <ol>
+        <li><strong>Download</strong> the latest build from the <a href="https://github.com/tlgync/mrd-releases/releases/latest" target="_blank" rel="noopener">releases page</a> (a <code>.zip</code>).</li>
+        <li><strong>Unzip</strong> it (double-click), then drag <strong>mrd.app</strong> into your <strong>Applications</strong> folder.</li>
+        <li><strong>Open it.</strong> Builds are signed and notarized by Apple, so it launches with no Gatekeeper warning and no Terminal step.</li>
+      </ol>
+      <p>On first launch, if you have Claude Code or Codex installed, mrd quietly sets up the
+      notification hooks those agents need (see <a href="#notifications">Notifications</a>). There's
+      nothing to configure.</p>
+      <div class="callout warn"><span class="ci">⚠️</span><p>If macOS ever says the app is “damaged”, you're almost certainly opening an <strong>older, un-notarized</strong> build. Grab the newest one — current releases are notarized. As a one-time fix for an old build: <code>xattr -dr com.apple.quarantine /Applications/mrd.app</code></p></div>
+    </section>
+
+    <!-- UPDATES -->
+    <section id="updates">
+      <h2><span class="num">04</span> Staying up to date</h2>
+      <p>mrd updates itself — there's no separate updater app and no daemon.</p>
+      <ul>
+        <li>Shortly after launch (and every few hours) it checks for a newer build.</li>
+        <li>If one exists, a small <strong>“Update available”</strong> footer appears at the bottom of the sidebar. It's invisible when you're already current.</li>
+        <li>Click it to download. mrd verifies the download's checksum, swaps itself in place, and relaunches.</li>
+      </ul>
+      <p>You can also check on demand from the menu bar: <strong>mrd → Check for Updates…</strong></p>
+      <div class="callout note"><span class="ci">ℹ️</span><p>If you're running mrd from a read-only spot (like straight out of a mounted disk image), it can't replace itself — it'll open the releases page instead. Move it to <strong>Applications</strong> for seamless updates. To turn auto-checks off entirely, see <a href="#settings">Settings</a>.</p></div>
+    </section>
+
+    <!-- LAYOUT -->
+    <section id="layout">
+      <h2><span class="num">05</span> The three panels</h2>
+      <p>The window is split into three regions, the same arrangement you know from Mail or Notes:</p>
+      <table class="doc">
+        <tr><th>Panel</th><th>What lives there</th></tr>
+        <tr><td><strong>Sidebar</strong> (left)</td><td>Your workspaces and groups. Each row shows the project's branch and folder, plus an attention dot when an agent needs you.</td></tr>
+        <tr><td><strong>Content</strong> (center)</td><td>The selected workspace: a Safari-style tab band over your terminals, splits, and browser panes.</td></tr>
+        <tr><td><strong>Inspector</strong> (right)</td><td>Details about the current workspace — listening ports, branch, and more. Hidden by default.</td></tr>
+      </table>
+      <p>Toggle the side panels with <kbd>⌃⌘S</kbd> (Sidebar) and <kbd>⌥⌘I</kbd> (Inspector). The sidebar
+      and inspector are real macOS glass; your terminal sits on a calm solid background so text stays
+      crisp.</p>
+    </section>
+
+    <!-- WORKSPACES -->
+    <section id="workspaces">
+      <h2><span class="num">06</span> Workspaces &amp; groups</h2>
+      <p>A <strong>workspace</strong> is a project's home — its working directory, its terminals, its
+      agents. A <strong>group</strong> is a labeled collection of workspaces (e.g. “API”, “Frontend”).</p>
+      <ul>
+        <li><strong>New Workspace</strong> — <kbd>⌘N</kbd>, or the <strong>+</strong> at the top of a group.</li>
+        <li><strong>New Group</strong> — <kbd>⇧⌘N</kbd>.</li>
+        <li><strong>Jump to a workspace</strong> — <kbd>⌘1</kbd> … <kbd>⌘9</kbd> selects the Nth one in sidebar order.</li>
+        <li><strong>Reorder</strong> — drag rows within or between groups.</li>
+        <li><strong>Close</strong> — <kbd>⌘W</kbd> closes the current workspace.</li>
+      </ul>
+      <p>Each row shows the git branch and an abbreviated folder path, so you can tell projects apart at
+      a glance. When an agent finishes or needs input while you're elsewhere, that row lights up — see
+      <a href="#notifications">Notifications &amp; attention</a>.</p>
+    </section>
+
+    <!-- TERMINALS -->
+    <section id="terminals">
+      <h2><span class="num">07</span> Terminals, tabs &amp; splits</h2>
+      <p>Inside a workspace you get a full terminal, rendered by libghostty.</p>
+      <h3>Tabs</h3>
+      <p>Open a new terminal tab with <kbd>⌘T</kbd>. Tabs sit in a band across the top of the content
+      area; click to switch, or use the <strong>+</strong> at the end of the band for the new-session
+      menu.</p>
+      <h3>Splits</h3>
+      <p>Divide a pane to see two things at once:</p>
+      <div class="kbd-grid">
+        <div class="kc"><span>Split right</span><kbd>⌘D</kbd></div>
+        <div class="kc"><span>Split down</span><kbd>⇧⌘D</kbd></div>
+        <div class="kc"><span>Focus a neighbor</span><kbd>⌥⌘ ← → ↑ ↓</kbd></div>
+        <div class="kc"><span>Close pane</span><kbd>⇧⌘W</kbd></div>
+      </div>
+      <h3>Your Ghostty config comes along</h3>
+      <p>mrd reads your existing Ghostty configuration — <code>~/.config/ghostty/config</code> and the
+      usual Application Support locations — so your fonts, colors, and keybindings are already in place.
+      You don't keep a second config just for mrd.</p>
+      <div class="callout note"><span class="ci">ℹ️</span><p>By default mrd renders exactly like native Ghostty. It applies no visual overrides of its own unless you explicitly opt in (see <code>MRD_RENDER_OVERRIDES</code> under <a href="#settings">Settings</a>).</p></div>
+    </section>
+
+    <!-- BROWSER -->
+    <section id="browser">
+      <h2><span class="num">08</span> Browser panes</h2>
+      <p>Sometimes you need a quick browser next to your terminal — a localhost preview, docs, a PR.
+      mrd can open a browser tab right inside a workspace with <kbd>⌥⌘B</kbd>. From the <strong>Browser</strong>
+      menu you can also clear browsing history or import data. The browser shares the same tab band as
+      your terminals, so it lives wherever your work does.</p>
+    </section>
+
+    <!-- INSPECTOR -->
+    <section id="inspector">
+      <h2><span class="num">09</span> The Inspector</h2>
+      <p>The Inspector (<kbd>⌥⌘I</kbd>) is a context panel for the selected workspace. Its most useful
+      section is <strong>Ports</strong>: the ports your project is currently listening on, detected
+      live — handy for spotting which dev server is up without hunting through logs. Branch and other
+      project details live here too, keeping the sidebar rows clean.</p>
+    </section>
+
+    <!-- AGENTS -->
+    <section id="agents">
+      <h2><span class="num">10</span> Running Claude &amp; Codex</h2>
+      <p>Open an agent from the <strong>+</strong> menu — you'll find it in the toolbar, at the end of
+      the tab band, on each sidebar group, and on a sidebar right-click. They all open the same menu:</p>
+      <table class="doc">
+        <tr><th>Item</th><th>What it does</th></tr>
+        <tr><td><strong>New Terminal</strong></td><td>A plain shell. Always available.</td></tr>
+        <tr><td><strong>Open Claude</strong></td><td>Starts a Claude Code session in a fresh pane. Shown only if the <code>claude</code> CLI is on your PATH.</td></tr>
+        <tr><td><strong>Open Codex</strong></td><td>Starts a Codex session. Shown only if the <code>codex</code> CLI is on your PATH.</td></tr>
+      </table>
+      <p>You can also just type <code>claude</code> or <code>codex</code> into any terminal — mrd notices an
+      agent running in a shell and starts tracking it, whether you launched it from the menu or by hand.</p>
+      <h3>How mrd knows what an agent is doing</h3>
+      <p>mrd never reads your screen to guess. It listens to each agent's own <strong>hook</strong> events —
+      the agent tells mrd when a turn starts, when a tool runs, and when it finishes. That's why the
+      status is reliable: it's the agent's own truth, not an interpretation of terminal output.</p>
+    </section>
+
+    <!-- NOTCH -->
+    <section id="notch">
+      <h2><span class="num">11</span> The notch HUD</h2>
+      <p>The heads-up display is a slim panel pinned under your MacBook's notch (or top-center, on a Mac
+      without one). Collapsed, it shows which agents are alive. Hover — or let an agent notify you — and
+      it expands into a card listing every agent workspace.</p>
+      <ul>
+        <li><strong>Live status per agent</strong> — <span style="color:var(--green)">green</span> while a turn is running, <span style="color:var(--accent)">amber</span> the moment it's waiting on you, quiet grey when idle.</li>
+        <li><strong>Click a row</strong> to jump straight to that pane.</li>
+        <li><strong>It never steals focus.</strong> The panel can't become the active window, so your typing and terminal focus are never disturbed.</li>
+      </ul>
+      <p>A notification banner slides in when an agent finishes off-screen, gated exactly like the
+      sidebar's attention dot — so you're told once, and it clears when you look.</p>
+      <div class="callout note"><span class="ci">ℹ️</span><p>Prefer the menu bar, or no HUD at all? The agent HUD is configurable — see <a href="#settings">Settings &amp; opt-outs</a>.</p></div>
+    </section>
+
+    <!-- NOTIFICATIONS -->
+    <section id="notifications">
+      <h2><span class="num">12</span> Notifications &amp; attention</h2>
+      <p>When an agent finishes a turn or asks for something while you're not looking, mrd raises
+      <strong>attention</strong> in three coordinated places:</p>
+      <ul>
+        <li>A dot and a one-line status on the workspace's sidebar row.</li>
+        <li>A banner in the notch HUD.</li>
+        <li>A native macOS notification, if the window isn't visible.</li>
+      </ul>
+      <p>Attention is smart about clearing itself: it goes away the instant you focus that workspace, the
+      moment the agent starts a new turn, or as soon as the agent resumes working after a pause. You
+      won't get stuck with a “needs you” that lingers after you've already dealt with it.</p>
+
+      <h3>Hooks set themselves up</h3>
+      <p>To receive these events, mrd installs small hooks into your agents' config on first launch —
+      <code>~/.claude/settings.json</code> for Claude Code and <code>~/.codex/hooks.json</code> for Codex.
+      It only writes when something's missing or out of date, and repairs itself if you move the app.</p>
+      <p>If you ever want to manage them by hand, the bundled CLI can:</p>
+      <pre class="code"><span class="c1"># install / refresh hooks for installed agents</span>
+/Applications/mrd.app/Contents/Resources/mrd-cli hooks setup
+
+<span class="c1"># remove them again</span>
+/Applications/mrd.app/Contents/Resources/mrd-cli hooks remove</pre>
+
+      <div class="callout warn"><span class="ci">⚠️</span><p><strong>Codex users:</strong> Codex ignores hooks it hasn't been told to trust — silently. The first time mrd adds new hooks, Codex will treat them as untrusted until you approve them once, through Codex's own hook-review prompt or its <code>/hooks</code> command. Already-trusted hooks keep working; this only affects newly added ones.</p></div>
+    </section>
+
+    <!-- QUESTIONS -->
+    <section id="questions">
+      <h2><span class="num">13</span> Answering questions in place</h2>
+      <p>Agents sometimes stop and ask: a multiple-choice question, or permission to run a tool or edit a
+      file. When that happens and you're <em>not</em> already looking at the pane, mrd surfaces it as a
+      card in the notch HUD — a tidy set of options, or an <strong>Allow / Deny</strong> prompt. Your
+      choice flows straight back to the agent, which carries on. No window-switching, no hunting for the
+      right tab.</p>
+      <ul>
+        <li><strong>Smart routing.</strong> If you're already focused on the agent's pane, mrd steps aside and lets the agent's own in-terminal prompt handle it — no duplicate card.</li>
+        <li><strong>Safe by default.</strong> If anything goes wrong — the pane closes, mrd quits, the panel is dismissed — the question is simply handed back to the agent's own interface. mrd never auto-denies on your behalf.</li>
+      </ul>
+      <p>This works for both Claude Code and Codex. (Claude additionally supports rich multiple-choice
+      questions; Codex surfaces permission prompts.)</p>
+    </section>
+
+    <!-- RESUME -->
+    <section id="resume">
+      <h2><span class="num">14</span> Session resume</h2>
+      <p>Close mrd and reopen it — your workspaces, tabs, and splits come back, and so do your agents.
+      mrd restores each agent's pane by replaying its scrollback and resuming the conversation with the
+      agent's native resume command, so you continue the same thread rather than starting over.</p>
+      <table class="doc">
+        <tr><th>When you closed it…</th><th>On relaunch</th></tr>
+        <tr><td>An agent with an in-progress conversation</td><td>Resumes that conversation (<code>claude --resume</code> / <code>codex resume</code>).</td></tr>
+        <tr><td>An agent open but never prompted</td><td>Reopens a fresh agent, ready to go.</td></tr>
+        <tr><td>You deliberately logged out / exited the agent</td><td>Nothing is reopened — your exit is respected.</td></tr>
+      </table>
+      <div class="callout note"><span class="ci">ℹ️</span><p>Codex doesn't emit a “session ended” signal, so a Codex session you closed on purpose may still reappear after a relaunch. That's a Codex limitation, not a bug in mrd. You can turn resume off entirely in <a href="#settings">Settings</a>.</p></div>
+    </section>
+
+    <!-- DICTATION -->
+    <section id="dictation">
+      <h2><span class="num">15</span> Voice dictation</h2>
+      <p>You can talk to your agent instead of typing. A microphone button appears in the toolbar
+      <em>whenever the focused pane is a Claude or Codex session</em> — it's deliberately hidden for plain
+      terminals, where free-form dictation rarely makes sense.</p>
+      <h3>How it works</h3>
+      <ol>
+        <li><strong>Click the mic to start.</strong> The first time, macOS asks for Microphone and Speech Recognition access. mrd locks onto the agent pane you're on and prepares the on-device model.</li>
+        <li><strong>Speak.</strong> A soft glow breathes around the target pane while it's listening (orange for Claude, bright grey for Codex). It keeps listening — it isn't push-to-talk and won't cut out on a pause.</li>
+        <li><strong>Click the mic again to finish.</strong> The transcribed text is pasted into the agent's prompt. <strong>mrd does not press Enter</strong> — you review it and send it yourself.</li>
+      </ol>
+      <p>Because it captures the pane when you start, the text always lands in the agent you were talking
+      to, even if focus wanders in the meantime.</p>
+      <div class="callout note"><span class="ci">🔒</span><p>Transcription uses Apple's on-device speech models (macOS 26's SpeechAnalyzer). Your audio never leaves your Mac. Dictation can be turned off completely in <a href="#settings">Settings</a>.</p></div>
+    </section>
+
+    <!-- SHORTCUTS -->
+    <section id="shortcuts">
+      <h2><span class="num">16</span> Keyboard shortcuts</h2>
+      <h3>Workspaces &amp; tabs</h3>
+      <div class="kbd-grid">
+        <div class="kc"><span>New Workspace</span><kbd>⌘N</kbd></div>
+        <div class="kc"><span>New Group</span><kbd>⇧⌘N</kbd></div>
+        <div class="kc"><span>New Terminal Tab</span><kbd>⌘T</kbd></div>
+        <div class="kc"><span>New Browser Tab</span><kbd>⌥⌘B</kbd></div>
+        <div class="kc"><span>Close Workspace</span><kbd>⌘W</kbd></div>
+        <div class="kc"><span>Close Pane</span><kbd>⇧⌘W</kbd></div>
+        <div class="kc"><span>Select Workspace 1–9</span><kbd>⌘1 … ⌘9</kbd></div>
+      </div>
+      <h3>Splits &amp; focus</h3>
+      <div class="kbd-grid">
+        <div class="kc"><span>Split Right</span><kbd>⌘D</kbd></div>
+        <div class="kc"><span>Split Down</span><kbd>⇧⌘D</kbd></div>
+        <div class="kc"><span>Focus Pane Left</span><kbd>⌥⌘ ←</kbd></div>
+        <div class="kc"><span>Focus Pane Right</span><kbd>⌥⌘ →</kbd></div>
+        <div class="kc"><span>Focus Pane Up</span><kbd>⌥⌘ ↑</kbd></div>
+        <div class="kc"><span>Focus Pane Down</span><kbd>⌥⌘ ↓</kbd></div>
+      </div>
+      <h3>View &amp; window</h3>
+      <div class="kbd-grid">
+        <div class="kc"><span>Toggle Sidebar</span><kbd>⌃⌘S</kbd></div>
+        <div class="kc"><span>Toggle Inspector</span><kbd>⌥⌘I</kbd></div>
+        <div class="kc"><span>Enter Full Screen</span><kbd>⌃⌘F</kbd></div>
+        <div class="kc"><span>Minimize</span><kbd>⌘M</kbd></div>
+      </div>
+      <p style="color:var(--ink-mute);font-size:14px;margin-top:16px">Standard editing shortcuts
+      (<kbd>⌘C</kbd>, <kbd>⌘V</kbd>, <kbd>⌘A</kbd>, <kbd>⌘Z</kbd>) work as usual inside the terminal.</p>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="settings">
+      <h2><span class="num">17</span> Settings &amp; opt-outs</h2>
+      <p>mrd is designed to need no setup, but every automatic behavior can be turned off. Each one has a
+      preference key and an environment variable; the preference is the easy way for everyday use.</p>
+      <p>To change a preference, run this in Terminal and then relaunch mrd:</p>
+      <pre class="code"><span class="c1"># example: turn the notch HUD off</span>
+defaults write com.merdi.mrd mrd.NotchHUD -bool NO
+
+<span class="c1"># turn it back on</span>
+defaults write com.merdi.mrd mrd.NotchHUD -bool YES</pre>
+      <table class="doc">
+        <tr><th>Behavior</th><th>Preference key</th><th>Env var</th></tr>
+        <tr><td>Notch agent HUD</td><td><code>mrd.NotchHUD</code></td><td><code>MRD_NOTCH_HUD=0</code></td></tr>
+        <tr><td>Menu-bar agent HUD</td><td><code>mrd.MenuBar</code></td><td><code>MRD_MENU_BAR=0</code></td></tr>
+        <tr><td>Auto-install agent hooks</td><td><code>mrd.AutoInstallHooks</code></td><td><code>MRD_AUTO_HOOKS=0</code></td></tr>
+        <tr><td>Resume agents on relaunch</td><td><code>mrd.AutoResumeAgents</code></td><td><code>MRD_AUTO_RESUME=0</code></td></tr>
+        <tr><td>In-app update checks</td><td><code>mrd.AutoCheckUpdates</code></td><td><code>MRD_AUTO_UPDATE=0</code></td></tr>
+        <tr><td>Voice dictation</td><td><code>mrd.Dictation</code></td><td><code>MRD_DICTATION=0</code></td></tr>
+        <tr><td>Agent hibernation</td><td><code>mrd.HibernateAgents</code></td><td><code>MRD_HIBERNATE=0</code></td></tr>
+      </table>
+      <h3>A few tunables</h3>
+      <table class="doc">
+        <tr><th>Setting</th><th>Key</th><th>Notes</th></tr>
+        <tr><td>Hibernate idle agents after N minutes</td><td><code>mrd.HibernateAfterMinutes</code></td><td>Number of minutes.</td></tr>
+        <tr><td>Scrollback lines replayed on resume</td><td><code>mrd.ScrollbackReplayLines</code></td><td>Higher = more history, slower restore.</td></tr>
+        <tr><td>Interactive question timeout</td><td><code>mrd.QuestionTimeoutSeconds</code></td><td>How long an HUD question card waits before handing back to the agent.</td></tr>
+        <tr><td>Dictation language</td><td><code>mrd.DictationLanguage</code></td><td>A locale like <code>en-US</code>; otherwise follows your system language.</td></tr>
+        <tr><td>Ghostty render overrides</td><td><code>mrd.TerminalRenderOverrides</code> / <code>MRD_RENDER_OVERRIDES=1</code></td><td>Advanced. Off by default — leave it off to render like native Ghostty.</td></tr>
+      </table>
+      <div class="callout note"><span class="ci">ℹ️</span><p>Booleans accept <code>YES</code>/<code>NO</code> (or <code>true</code>/<code>false</code>). Environment variables are useful when launching mrd from a script; the <code>defaults</code> preference is what most people want.</p></div>
+    </section>
+
+    <!-- FILES -->
+    <section id="files">
+      <h2><span class="num">18</span> Files &amp; data</h2>
+      <p>mrd keeps its own data in one place, and touches your agents' config only for hooks:</p>
+      <table class="doc">
+        <tr><th>Location</th><th>What it is</th></tr>
+        <tr><td><code>~/Library/Application&nbsp;Support/mrd/</code></td><td>Everything mrd owns: your saved layout, agent session records, scrollback, and its local control socket.</td></tr>
+        <tr><td><code>~/.claude/settings.json</code></td><td>Where mrd's Claude Code notification hooks live.</td></tr>
+        <tr><td><code>~/.codex/hooks.json</code></td><td>Where mrd's Codex notification hooks live.</td></tr>
+        <tr><td><code>/Applications/mrd.app/Contents/Resources/mrd-cli</code></td><td>The bundled command-line helper used by the hooks (and for manual <code>hooks setup/remove</code>).</td></tr>
+      </table>
+      <p>Nothing here is required reading — it's listed so you know exactly what mrd writes and where, and
+      what to remove if you ever uninstall.</p>
+    </section>
+
+    <!-- PRIVACY -->
+    <section id="privacy">
+      <h2><span class="num">19</span> Privacy</h2>
+      <ul>
+        <li><strong>No telemetry.</strong> mrd doesn't track you or phone home about how you use it.</li>
+        <li><strong>On-device speech.</strong> Dictation runs entirely on Apple's local speech models — your audio never leaves your Mac.</li>
+        <li><strong>No screen scraping.</strong> Agent status comes from the agents' own hook events, not from reading your terminal output or keystrokes.</li>
+        <li><strong>Local only.</strong> The one network thing mrd does on its own is check GitHub for a newer release — and you can switch even that off (<a href="#settings">Settings</a>).</li>
+      </ul>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <section id="troubleshooting">
+      <h2><span class="num">20</span> Troubleshooting</h2>
+
+      <h3>“Open Claude / Open Codex” isn't in the + menu</h3>
+      <p>mrd only shows an agent if it can find that CLI on the same <code>PATH</code> your login shell
+      uses. If you installed it in a way that isn't on your shell profile's PATH (e.g. a custom directory
+      not exported in <code>~/.zshrc</code>/<code>~/.zprofile</code>), add it there, then restart mrd. Test it
+      by opening a normal Terminal and running <code>which claude</code> or <code>which codex</code>.</p>
+
+      <h3>Codex isn't sending notifications / questions</h3>
+      <p>Codex silently ignores hooks it hasn't been told to trust. Approve mrd's hooks once via Codex's
+      hook-review prompt or its <code>/hooks</code> command. See <a href="#notifications">Notifications &amp; attention</a>.</p>
+
+      <h3>The microphone button isn't showing</h3>
+      <p>The mic only appears when the focused pane is a Claude or Codex session — not for plain
+      terminals. Also confirm dictation isn't disabled (<code>mrd.Dictation</code>), and that you granted
+      Microphone and Speech Recognition access in <strong>System Settings → Privacy &amp; Security</strong>.</p>
+
+      <h3>macOS says the app is “damaged”</h3>
+      <p>You're opening an old, un-notarized build. Download the newest release; current builds are
+      notarized and open cleanly. To rescue an old copy: <code>xattr -dr com.apple.quarantine /Applications/mrd.app</code>.</p>
+
+      <h3>Updates won't install</h3>
+      <p>mrd can't replace itself if it's running from a read-only location (like a mounted disk image).
+      Move <strong>mrd.app</strong> into <strong>Applications</strong> and try again.</p>
+
+      <h3>An agent row is stuck on a status</h3>
+      <p>Status is driven by agent hooks. If a row looks wrong, make sure hooks are installed and trusted
+      (above). Reinstall them with <code>mrd-cli hooks setup</code> if needed. Keeping mrd updated also
+      helps — status handling improves release to release.</p>
+    </section>
+
+    <!-- UNINSTALL -->
+    <section id="uninstall">
+      <h2><span class="num">21</span> Uninstall</h2>
+      <ol>
+        <li>Quit mrd.</li>
+        <li>Optionally remove its hooks first: <code>/Applications/mrd.app/Contents/Resources/mrd-cli hooks remove</code></li>
+        <li>Drag <strong>mrd.app</strong> from Applications to the Trash.</li>
+        <li>Optionally delete its data: <code>rm -rf ~/Library/Application\ Support/mrd</code></li>
+      </ol>
+      <p>If you skip the hook-removal step, you can also delete mrd's entries by hand from
+      <code>~/.claude/settings.json</code> and <code>~/.codex/hooks.json</code>.</p>
+    </section>
+
+    <p style="margin-top:48px;color:var(--ink-mute);font-size:14px;border-top:1px solid var(--border);padding-top:24px">
+      Something missing or unclear? Open an issue on the
+      <a href="https://github.com/tlgync/mrd-releases" target="_blank" rel="noopener">releases repository</a>.
+    </p>
+  </main>
+</div>
+
+<footer class="footer wrap">
+  <div class="footer-base" style="border:0;margin:0;padding:0">
+    <span>© 2026 mrd · Made for macOS</span>
+    <span>Requires macOS 26 (Tahoe) · Apple Silicon</span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -62,6 +62,26 @@
       });
   }
 
+  /* --- Download click analytics (GA4) ------------------------------------
+     Fires a `download_click` event per button so GA4 reports how many people
+     clicked and which button (nav / hero / cta) on which page. Geography and
+     traffic source ("where from") come automatically from GA4. */
+  function wireDownloadAnalytics() {
+    const LABELS = { navDownload: 'nav', heroDownload: 'hero', ctaDownload: 'cta' };
+    DL_IDS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('click', () => {
+        if (typeof window.gtag !== 'function') return;
+        window.gtag('event', 'download_click', {
+          button_location: LABELS[id] || id,
+          page_path: location.pathname,
+          link_url: el.href,
+        });
+      });
+    });
+  }
+
   /* --- Sticky nav shadow on scroll --------------------------------------- */
   function wireNav() {
     const nav = document.getElementById('nav');
@@ -113,6 +133,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     wireDownloads();
+    wireDownloadAnalytics();
     wireNav();
     wireReveal();
     wireDocsSpy();
